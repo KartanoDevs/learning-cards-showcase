@@ -1,0 +1,15 @@
+# Ignorar archivos innecesarios en la imagen Docker del frontend
+node_modules
+npm-debug.log
+.angular
+dist
+*.md
+.git
+.gitignore
+.vscode
+.idea
+*.log
+coverage
+.nyc_output
+e2e
+karma.conf.js

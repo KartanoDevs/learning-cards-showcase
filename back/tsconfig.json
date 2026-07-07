@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    // Layout
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // Node / CommonJS
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "types": ["node"],
+
+    // Maps / d.ts (opcionales; puedes dejarlos si te sirven)
+    "sourceMap": true,
+    "declaration": false,
+    "declarationMap": false,
+
+    // Estrictos
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Quitar o ajustar estas opciones para backend Node
+    "jsx": "preserve",              // <-- o elimínala directamente
+    "verbatimModuleSyntax": false,  // <-- CLAVE para evitar TS1295 en CJS
+    "isolatedModules": false,       // <-- opcional; ts-node suele ir mejor sin esto
+    "moduleDetection": "auto",
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}

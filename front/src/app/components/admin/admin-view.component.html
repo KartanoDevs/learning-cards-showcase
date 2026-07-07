@@ -1,0 +1,74 @@
+<div class="admin-view">
+  <header class="admin-header">
+    <div class="header-content">
+      <h1 class="page-title">Administración</h1>
+      <p class="page-subtitle text-700">
+        Selecciona una sección para gestionar su contenido.
+      </p>
+    </div>
+
+    <!-- NAVEGACIÓN VISUAL CON LOS NUEVOS ELEMENTOS -->
+    <div class="view-selector-grid">
+      <!-- Elemento para Temas/Grupos (CON CAMBIOS) -->
+      <div
+        class="group-item"
+        [routerLink]="['/admin']"
+        [queryParams]="{ view: 'groups' }"
+        [class.active]="selectedView === 'groups'"
+        (mouseenter)="hoveredView = 'groups'"
+        (mouseleave)="hoveredView = null"
+      >
+        <div class="group-content-grid">
+          <i
+            class="folder-icon"
+            [ngClass]="
+              hoveredView === 'groups' || selectedView === 'groups'
+                ? 'pi pi-folder-open'
+                : 'pi pi-folder'
+            "
+          ></i>
+          <div class="group-info">
+            <span class="group-name">Temas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elemento para Tarjetas (CON CAMBIOS) -->
+      <div
+        class="group-item"
+        [routerLink]="['/admin']"
+        [queryParams]="{ view: 'cards' }"
+        [class.active]="selectedView === 'cards'"
+        (mouseenter)="hoveredView = 'cards'"
+        (mouseleave)="hoveredView = null"
+      >
+        <div class="group-content-grid">
+          <!-- Nota: pi-table no tiene un estado 'open', por lo que solo se aplican los efectos CSS -->
+          <i
+            class="pi folder-icon"
+            [ngClass]="
+              hoveredView === 'cards' || selectedView === 'cards'
+                ? 'pi-file-edit'
+                : 'pi-file'
+            "
+          ></i>
+          <div class="group-info">
+            <span class="group-name">Tarjetas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- El contenido cambia según la vista seleccionada -->
+  <main class="admin-content mt-2">
+    <div [ngSwitch]="selectedView">
+
+      <!-- Carga el componente de gestión de Grupos -->
+      <app-admin-groups *ngSwitchCase="'groups'"></app-admin-groups>
+
+      <!-- Carga el componente de gestión de Tarjetas -->
+      <app-admin-cards *ngSwitchCase="'cards'"></app-admin-cards>
+    </div>
+  </main>
+</div>

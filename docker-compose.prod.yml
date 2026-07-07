@@ -1,0 +1,105 @@
+# ================================================================
+# Docker Compose - Configuración de Producción
+# ================================================================
+# Learning Cards Application - Backend + Frontend
+# ================================================================
+
+version: '3.8'
+
+services:
+  # ================================
+  # Backend Service (API)
+  # ================================
+  backend:
+    image: learning-cards-backend:latest
+    container_name: learning-cards-api
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - NODE_ENV=production
+      # IMPORTANTE: La URL de MongoDB se lee desde .env
+      # Para mayor seguridad, evita incluir credenciales hardcodeadas aquí
+      - MONGO_URI=${MONGO_URI}
+      # CORS hardcodeado para evitar problemas con lectura de .env
+      - CORS_ORIGIN=*
+    restart: unless-stopped
+    
+    # Health check para asegurar que el servicio está corriendo
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:4000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+    
+    # Límites de recursos (ajusta según tus necesidades)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    
+    # Logging configurado para no llenar el disco
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    networks:
+      - learning-cards-network
+
+  # ================================
+  # Frontend Service (Nginx)
+  # ================================
+  frontend:
+    image: learning-cards-frontend:latest
+    container_name: learning-cards-web
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    
+    # Depende del backend para funcionar correctamente
+    depends_on:
+      backend:
+        condition: service_healthy
+    
+    # Health check para el frontend
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    
+    # Límites de recursos
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    networks:
+      - learning-cards-network
+
+# ================================
+# Networks
+# ================================
+networks:
+  learning-cards-network:
+    driver: bridge
+    name: learning-cards-net

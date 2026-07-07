@@ -1,0 +1,82 @@
+<div class="groups-view-fullscreen p-4">
+
+  <div class="header-content mb-5">
+    <h1 class="page-title">Temas de estudio</h1>
+
+    <!-- Buscador -->
+    <div class="searchbar">
+      <label class="searchbar__label" for="group-search">Buscar</label>
+      <div class="p-inputgroup searchbar__group">
+        <span class="p-inputgroup-addon searchbar__icon" aria-hidden="true"><i class="pi pi-search"></i></span>
+        <input
+          id="group-search"
+          type="text"
+          pInputText
+          class="search-input"
+          placeholder="Buscar grupos por nombre…"
+          [(ngModel)]="searchTerm"
+          (input)="filterGroups()"
+          autocomplete="off"
+        />
+        <button
+          pButton
+          type="button"
+          class="p-button-text p-button-rounded p-inputgroup-addon searchbar__clear"
+          *ngIf="searchTerm"
+          (click)="searchTerm=''; filterGroups()"
+          aria-label="Limpiar búsqueda"
+          title="Limpiar"
+        ><i class="pi pi-times"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado de Carga -->
+  <div *ngIf="allGroups.length === 0 && !searchTerm" class="loading-state">
+    Cargando grupos...
+  </div>
+
+  <!-- Contenedor de la Grilla y Paginador -->
+  <ng-container *ngIf="allGroups.length > 0 || searchTerm">
+    <div class="groups-grid-container">
+      <div *ngFor="let group of paginatedGroups"
+          class="group-item p-ripple"
+          (click)="selectGroup(group._id)"
+          (mouseenter)="onMouseEnter(group._id)"
+          (mouseleave)="onMouseLeave()">
+        <div class="group-content-grid">
+          <i
+            [ngClass]="{
+              'pi-folder': group._id !== hoveredGroupId,
+              'pi-folder-open': group._id === hoveredGroupId
+            }"
+            class="pi folder-icon"
+            [ngStyle]="{'transform': group._id === hoveredGroupId ? 'scale(1.1)' : 'scale(1)'}">
+          </i>
+          <div class="group-info">
+            <span class="group-name">{{ group.name }}</span>
+            <p class="group-description">{{ group.description }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensaje de Búsqueda sin Resultados -->
+      <ng-container *ngIf="filteredGroups.length === 0 && searchTerm">
+        <div class="empty-state-grid">
+          No se encontraron grupos que coincidan con "{{ searchTerm }}".
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- ===== AQUÍ USAMOS EL NUEVO COMPONENTE PAGINADOR ===== -->
+    <app-custom-paginator
+      *ngIf="totalPages > 1"
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChange)="onPageChange($event)"
+      [label]="'Página'"
+    ></app-custom-paginator>
+
+  </ng-container>
+</div>
+

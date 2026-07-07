@@ -1,0 +1,265 @@
+/* Estilos para este componente, copiados y adaptados de admin-groups.component.css */
+
+/* --- Buscador --- */
+.searchbar {
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.searchbar__group {
+  border-radius: 12px;
+  background: var(--surface-0, #fff);
+  transition: box-shadow 0.2s ease, transform 0.12s ease, border-color 0.2s ease;
+  overflow: hidden;
+  border: 1px solid var(--search-border, var(--ngx-border-color));
+}
+
+.searchbar__group:focus-within {
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08),
+    0 0 0 4px var(--search-focus-ring, rgba(51, 102, 255, 0.2));
+  border-color: var(--brand-300, var(--ngx-primary-color));
+  transform: translateY(-1px);
+}
+
+.searchbar__icon {
+  background: transparent;
+  border: 0 !important;
+  color: var(--search-icon, var(--ngx-text));
+  padding-inline: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.search-input.p-inputtext,
+.search-input {
+  width: 90%;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  color: var(--text-900, var(--ngx-text));
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+}
+
+.search-input::placeholder {
+  color: var(--search-placeholder, #999);
+}
+
+.searchbar__clear.p-button {
+  border: 0;
+  background: transparent;
+  color: var(--search-placeholder, #999);
+  padding: 0 0.6rem;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.searchbar__clear.p-button:hover {
+  background: rgba(96, 165, 250, 0.1);
+  color: var(--brand-600, var(--ngx-primary-color));
+}
+
+/* Variables de estilo para el tema NGX-Admin */
+:host {
+  --ngx-bg: #fff;
+  --ngx-text: #2a2a2a;
+  --ngx-border-color: #ebeef2;
+  --ngx-header-bg: #f7f9fc;
+  --ngx-row-hover-bg: #f7f9fc;
+  --ngx-primary-color: #3366ff;
+  --ngx-success-color: #00d68f;
+  --ngx-danger-color: #ff3d71;
+  --ngx-paginator-hover-bg: #eef2f7;
+}
+
+/* Contenedor principal que simula una 'nb-card' */
+.ngx-style-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--ngx-border-color);
+  overflow: hidden;
+  background-color: var(--ngx-bg);
+}
+
+/* Estilos aplicados a la tabla de PrimeNG */
+:host ::ng-deep .p-datatable-ngx .p-datatable-header {
+  background-color: var(--ngx-bg);
+  border-bottom: 1px solid var(--ngx-border-color);
+  padding: 1rem 1.25rem;
+}
+
+:host ::ng-deep .p-datatable-ngx .p-datatable-thead > tr > th {
+  background-color: var(--ngx-header-bg);
+  color: var(--ngx-text);
+  font-weight: 600;
+  border: none;
+  border-bottom: 1px solid var(--ngx-border-color);
+  padding: 1rem 1.25rem;
+  text-align: left;
+}
+
+:host ::ng-deep .p-datatable-ngx .p-datatable-tbody > tr {
+  transition: background-color 0.2s ease;
+}
+
+:host ::ng-deep .p-datatable-ngx .p-datatable-tbody > tr:hover {
+  background-color: var(--ngx-row-hover-bg) !important;
+}
+
+:host ::ng-deep .p-datatable-ngx .p-datatable-tbody > tr > td {
+  border-bottom: 1px solid var(--ngx-border-color) !important;
+  padding: 1rem 1.25rem;
+  color: var(--ngx-text);
+}
+
+/* Contenedor de la barra de herramientas */
+.toolbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background-color: var(--ngx-bg);
+  border-bottom: 1px solid var(--ngx-border-color);
+  gap: 1rem;
+}
+
+/* Estilos para los botones de acción dentro de las filas */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Estilos para los campos de edición */
+input,
+textarea,
+:host ::ng-deep .p-dropdown {
+  width: 100%;
+  border: 1px solid var(--brand-500) !important;
+  background-color: rgba(37, 99, 235, 0.05) !important;
+  border-radius: 8px !important;
+}
+
+:host ::ng-deep .p-dropdown:focus-within {
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* --- Estilos para el nuevo botón de Añadir Tarjeta --- */
+.add-item-container {
+  transform: scale(0.7);
+  transform-origin: center right;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.group-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 140px;
+  padding: 1rem;
+  min-height: 100px;
+  justify-content: center;
+  border: 1px solid var(--surface-2);
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: var(--surface-0);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.05);
+  margin-left: 10px;
+}
+
+.group-item:hover:not(.disabled) {
+  border-color: var(--brand-300);
+  box-shadow: 0 5px 12px rgba(15, 23, 42, 0.1);
+  transform: translateY(-3px);
+}
+
+.group-item.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.folder-icon {
+  font-size: 2.5rem;
+  color: var(--text-700);
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.group-item:hover:not(.disabled) .folder-icon {
+  color: var(--brand-500);
+  transform: scale(1.05);
+}
+
+.group-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-900);
+  transition: color 0.2s ease-in-out;
+}
+
+
+/* --- Estilos para la celda de imagen --- */
+.image-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.image-icon {
+  font-size: 1.2rem;
+  color: var(--text-700);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.image-icon:hover {
+  color: var(--brand-500);
+}
+
+.image-url-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; /* Ajusta según necesidad */
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* --- Estilos para el panel de previsualización --- */
+/* Forzamos la posición del panel para que aparezca siempre encima */
+:host ::ng-deep .p-overlaypanel {
+  transform-origin: center bottom !important;
+}
+
+/* Contenedor de la imagen dentro del panel */
+:host ::ng-deep .p-overlaypanel-content {
+  padding: 0.5rem !important;
+}
+
+/* La imagen de previsualización */
+.image-preview {
+  max-width: 250px;
+  max-height: 250px;
+  display: block;
+  border-radius: 8px;
+}
+
+/* Estilo para el panel del desplegable */
+:host ::ng-deep .p-select-overlay {
+  background-color: var(--surface-0, white);
+}
+
+/* Estilo para el hover de las opciones del desplegable */
+:host ::ng-deep .p-select-option:hover {
+  background-color: rgba(96, 165, 250, 0.1) !important; /* Azul claro transparente */
+  color: var(--brand-600, #1D4ED8) !important; /* Azul intenso */
+}
+
+:host ::ng-deep .p-inputicon{
+  top: 20% !important;
+}

@@ -1,0 +1,242 @@
+/* --- INICIO: CÓDIGO DEL BUSCADOR AÑADIDO --- */
+/* (Copiado de list-groups.page.css) */
+.searchbar {
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 0; /* Anulamos el margen del ejemplo */
+}
+
+/* Asumimos que estas variables están definidas globalmente
+  en tu proyecto, ya que tu archivo de ejemplo las usaba
+  pero no las definía.
+*/
+.searchbar__group {
+  border-radius: 12px;
+  background: var(--surface-0, #fff); /* Fallback a blanco */
+  transition: box-shadow 0.2s ease, transform 0.12s ease, border-color 0.2s ease;
+  overflow: hidden;
+  border: 1px solid var(--search-border, var(--ngx-border-color)); /* Fallback a ngx */
+}
+
+.searchbar__group:focus-within {
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08),
+    0 0 0 4px var(--search-focus-ring, rgba(51, 102, 255, 0.2)); /* Fallback a ngx */
+  border-color: var(--brand-300, var(--ngx-primary-color)); /* Fallback a ngx */
+  transform: translateY(-1px);
+}
+
+.searchbar__icon {
+  background: transparent;
+  border: 0 !important;
+  color: var(--search-icon, var(--ngx-text)); /* Fallback a ngx */
+  padding-inline: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.search-input.p-inputtext,
+.search-input {
+  width: 90%;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  color: var(--text-900, var(--ngx-text)); /* Fallback a ngx */
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+}
+
+.search-input::placeholder {
+  color: var(--search-placeholder, #999); /* Fallback a gris */
+}
+
+.searchbar__clear.p-button {
+  border: 0;
+  background: transparent;
+  color: var(--search-placeholder, #999); /* Fallback a gris */
+  padding: 0 0.6rem;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.searchbar__clear.p-button:hover {
+  background: rgba(96, 165, 250, 0.1);
+  color: var(--brand-600, var(--ngx-primary-color)); /* Fallback a ngx */
+}
+/* --- FIN: CÓDIGO DEL BUSCADOR AÑADIDO --- */
+
+/* Variables de estilo para el tema NGX-Admin */
+:host {
+  --ngx-bg: #fff;
+  --ngx-text: #2a2a2a;
+  --ngx-border-color: #ebeef2;
+  --ngx-header-bg: #f7f9fc;
+  --ngx-row-hover-bg: #f7f9fc;
+  --ngx-primary-color: #3366ff;
+  --ngx-success-color: #00d68f;
+  --ngx-danger-color: #ff3d71;
+  --ngx-paginator-hover-bg: #eef2f7;
+}
+
+/* Contenedor principal que simula una 'nb-card' */
+.ngx-style-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--ngx-border-color);
+  overflow: hidden;
+  background-color: var(--ngx-bg);
+}
+
+/* Estilos aplicados a la tabla de PrimeNG */
+:host ::ng-deep .p-datatable-ngx .p-datatable-header {
+  background-color: var(--ngx-bg);
+  border-bottom: 1px solid var(--ngx-border-color);
+  padding: 1rem 1.25rem;
+}
+
+:host ::ng-deep .p-datatable-ngx .p-datatable-thead > tr > th {
+  background-color: var(--ngx-header-bg);
+  color: var(--ngx-text);
+  font-weight: 600;
+  border: none;
+  border-bottom: 1px solid var(--ngx-border-color);
+  padding: 1rem 1.25rem;
+  text-align: left;
+}
+
+:host ::ng-deep .p-datatable-ngx .p-datatable-tbody > tr {
+  transition: background-color 0.2s ease;
+}
+
+:host ::ng-deep .p-datatable-ngx .p-datatable-tbody > tr:hover {
+  background-color: var(--ngx-row-hover-bg) !important;
+}
+
+:host ::ng-deep .p-datatable-ngx .p-datatable-tbody > tr > td {
+  border-bottom: 1px solid var(--ngx-border-color) !important;
+  padding: 1rem 1.25rem;
+  color: var(--ngx-text);
+}
+
+/* --- ESTILOS MEJORADOS PARA EL BOTÓN Y SU CONTENEDOR --- */
+
+/* 8. MODIFICADO EL TOOLBAR CONTAINER */
+.toolbar-container {
+  display: flex;
+  justify-content: space-between; /* Alinea buscador a la izq. y botón a la der. */
+  align-items: center; /* Centra verticalmente */
+  padding: 1rem 1.25rem;
+  background-color: var(--ngx-bg);
+  border-bottom: 1px solid var(--ngx-border-color);
+  gap: 1rem; /* Espacio entre buscador y botón */
+}
+
+/* --- Estilos para el nuevo botón de Añadir Tema --- */
+.add-item-container {
+  transform: scale(0.7);
+  transform-origin: center right;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.group-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 140px;
+  padding: 1rem;
+  min-height: 100px;
+  justify-content: center;
+  border: 1px solid var(--surface-2);
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: var(--surface-0);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.05);
+}
+
+.group-item:hover:not(.disabled) {
+  border-color: var(--brand-300);
+  box-shadow: 0 5px 12px rgba(15, 23, 42, 0.1);
+  transform: translateY(-3px);
+}
+
+.group-item.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.folder-icon {
+  font-size: 2.5rem;
+  color: var(--text-700);
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.group-item:hover:not(.disabled) .folder-icon {
+  color: var(--brand-500);
+  transform: scale(1.05);
+}
+
+.group-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-900);
+  transition: color 0.2s ease-in-out;
+}
+
+/* Estilos para los botones de acción dentro de las filas */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.action-buttons .p-button {
+  transition: color 0.2s ease;
+}
+
+.action-buttons .action-edit:hover {
+  color: var(--ngx-primary-color);
+}
+.action-buttons .action-save:hover {
+  color: var(--ngx-success-color);
+}
+.action-buttons .action-cancel:hover {
+  color: var(--ngx-danger-color);
+}
+.action-buttons .action-toggle:hover {
+  color: #ffc94d;
+}
+
+input,
+textarea {
+  border: 1px solid;
+  border-color: var(--brand-500);
+  background-color: rgba(37, 99, 235, 0.05);
+  border-radius: 12px;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.15);
+}
+
+/* Estilos específicos para textareas con auto-resize */
+:host ::ng-deep .auto-resize-textarea {
+  min-height: 40px;
+  max-height: 300px;
+  resize: none;
+  overflow-y: auto;
+  width: 100%;
+  padding: 0.75rem;
+  line-height: 1.5;
+  transition: height 0.1s ease-out;
+}
+
+/* Asegurar que las celdas de edición tengan suficiente espacio */
+:host ::ng-deep .p-datatable-ngx .p-datatable-tbody > tr > td:first-child,
+:host ::ng-deep .p-datatable-ngx .p-datatable-tbody > tr > td:nth-child(2) {
+  min-width: 200px;
+  vertical-align: top;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}

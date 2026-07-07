@@ -1,0 +1,68 @@
+<section class="cards-wrap">
+  <div *ngIf="loading" class="state">
+    <p-progressSpinner styleClass="w-3rem h-3rem"></p-progressSpinner>
+  </div>
+
+  <p-message *ngIf="!loading && error" severity="error" [text]="error"></p-message>
+
+  <!-- Título del grupo -->
+  <h2 *ngIf="groupName" class="group-title">{{ groupName }}</h2>
+
+  <ng-container *ngIf="!loading && !error">
+    <ng-container *ngIf="cards.length; else empty">
+      <!-- Tarjeta -->
+      <app-card
+        [card]="cards[0]"
+      ></app-card>
+
+      <!-- ===== PAGINADOR ACTUALIZADO CON LA ETIQUETA PERSONALIZADA ===== -->
+      <app-custom-paginator
+        *ngIf="totalPages > 1"
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        (pageChange)="onPageChange($event)"
+        [label]="'Tarjeta'"
+      ></app-custom-paginator>
+
+      <!-- Controles de consulta -->
+      <div class="controls">
+        <button type="button" class="btn" (click)="shuffleOne()">
+          Shuffle One
+        </button>
+        <button type="button" class="btn" (click)="toggleReverse()">
+          {{ reverse ? 'Disable Reverse' : 'Enable Reverse' }}
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-template #empty>
+      <div class="state empty">No hay tarjetas en este grupo.</div>
+    </ng-template>
+  </ng-container>
+
+  <!-- Modal de imagen -->
+  <p-dialog
+    [(visible)]="showImage"
+    [modal]="true"
+    [dismissableMask]="true"
+    [draggable]="false"
+    [resizable]="false"
+    header="Imagen"
+    [style]="{ width: 'min(92vw, 780px)' }"
+    [contentStyle]="{ padding: '0' }"
+    (onHide)="closeImageModal()"
+  >
+    <div class="image-modal">
+      <img
+        *ngIf="modalImageUrl; else noimg"
+        [src]="modalImageUrl!"
+        alt="Imagen de la tarjeta"
+        class="image"
+      />
+      <ng-template #noimg>
+        <div class="no-image">No hay imagen disponible</div>
+      </ng-template>
+    </div>
+  </p-dialog>
+</section>
+

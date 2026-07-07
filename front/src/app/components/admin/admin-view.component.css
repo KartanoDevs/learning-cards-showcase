@@ -1,0 +1,86 @@
+
+/* Estilos para la cabecera de la página de administración */
+.admin-header {
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--surface-2);
+}
+
+
+/* Contenedor para los nuevos selectores de vista */
+.view-selector-grid {
+  display: flex;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+
+/* --- Estilos para los elementos de selección --- */
+
+.group-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 140px;
+  padding: 1rem;
+  min-height: 100px;
+  justify-content: center;
+
+  border: 1px solid var(--surface-2);
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: var(--surface-0);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.05);
+}
+
+.group-item:hover {
+  border-color: var(--brand-300);
+  box-shadow: 0 5px 12px rgba(15, 23, 42, 0.1);
+  transform: translateY(-3px);
+}
+
+/* --- Estilos para el elemento activo --- */
+.group-item.active {
+  border-color: var(--brand-500);
+  background-color: rgba(37, 99, 235, 0.05);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.15);
+}
+
+.group-item.active .folder-icon,
+.group-item.active .group-name {
+  color: var(--brand-600);
+}
+
+
+.group-content-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.folder-icon {
+  font-size: 2.5rem;
+  color: var(--text-700);
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.group-item:hover .folder-icon {
+    color: var(--brand-500);
+    transform: scale(1.05);
+}
+
+.group-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-900);
+  transition: color 0.2s ease-in-out;
+}
+

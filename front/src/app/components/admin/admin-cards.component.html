@@ -1,0 +1,179 @@
+<p-toast></p-toast>
+<p-overlayPanel #imagePreviewPanel [showCloseIcon]="false" appendTo="body"><img *ngIf="imageForPreview" [src]="imageForPreview" alt="Previsualización" class="image-preview"/></p-overlayPanel>
+
+<div class="ngx-style-card">
+
+  <!-- Barra de herramientas con buscador y botón de añadir -->
+  <div class="toolbar-container">
+    <div class="searchbar">
+      <div class="p-inputgroup searchbar__group">
+        <span class="p-inputgroup-addon searchbar__icon"><i class="pi pi-search"></i></span>
+        <input
+          type="text"
+          pInputText
+          class="search-input"
+          placeholder="Buscar por inglés, español o tema…"
+          [(ngModel)]="searchTerm"
+          (input)="filterCards()"
+          autocomplete="off"
+        />
+        <button
+          pButton
+          type="button"
+          class="p-button-text p-button-rounded p-inputgroup-addon searchbar__clear"
+          *ngIf="searchTerm"
+          (click)="searchTerm=''; filterCards()"
+          aria-label="Limpiar búsqueda"
+        ><i class="pi pi-times"></i></button>
+      </div>
+    </div>
+    <!-- Botones de acción -->
+    <div class="add-item-container">
+      <!-- Añadir tarjeta -->
+      <div
+        class="group-item add-item"
+        role="button"
+        tabindex="0"
+        (click)="!isAddingNewRow && addNewCardRow()"
+        [class.disabled]="isAddingNewRow"
+      >
+        <i class="pi pi-plus folder-icon"></i>
+        <span class="group-name">Añadir Tarjeta</span>
+      </div>
+<!-- Visualizar tarjetas del tema actual (usa el mismo patrón que selectGroup) -->
+<div class="group-item add-item" role="button" tabindex="0" (click)="viewTopicCards()"
+  [class.disabled]="!initialGroupIdFilter" tooltipPosition="top">
+  <i class="pi pi-eye folder-icon"></i>
+  <span class="group-name">Visualizar tarjetas tema</span>
+</div>
+    </div>
+  </div>
+
+  <!-- Tabla de Tarjetas -->
+  <p-table
+    #pTable
+    [value]="paginatedCards" dataKey="_id"
+    editMode="row"
+    styleClass="p-datatable-ngx"
+    [tableStyle]="{'min-width': '60rem'}"
+    sortMode="multiple"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:25%" pSortableColumn="spanish">Español <p-sortIcon field="spanish"></p-sortIcon></th>
+        <th style="width:25%" pSortableColumn="english">Inglés <p-sortIcon field="english"></p-sortIcon></th>
+        <th style="width:10%" pSortableColumn="order">Orden <p-sortIcon field="order"></p-sortIcon></th>
+        <th style="width:15%" pSortableColumn="groupId">Tema <p-sortIcon field="groupId"></p-sortIcon></th>
+        <th style="width:20%">Imagen</th>
+        <th class="text-center">Visible</th>
+        <th style="width:10rem" class="text-center">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-card let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="card">
+        <!-- Columna Español -->
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <textarea pInputTextarea [(ngModel)]="card.spanish" rows="3" class="w-full"
+                (keydown.enter)="$event.stopPropagation()"></textarea>
+            </ng-template>
+            <ng-template pTemplate="output">{{ card.spanish }}</ng-template>
+          </p-cellEditor>
+        </td>
+        <!-- Columna Inglés -->
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <textarea pInputTextarea [(ngModel)]="card.english" rows="3" class="w-full"
+                (keydown.enter)="$event.stopPropagation()"></textarea>
+            </ng-template>
+            <ng-template pTemplate="output">{{ card.english }}</ng-template>
+          </p-cellEditor>
+        </td>
+        <!-- Columna Orden -->
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="card.order"
+                class="p-inputtext-sm"></ng-template>
+            <ng-template pTemplate="output">{{ card.order }}</ng-template>
+          </p-cellEditor>
+        </td>
+        <!-- Columna Tema (Grupo) -->
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-dropdown
+                [options]="groups"
+                [(ngModel)]="card.groupId"
+                optionLabel="name"
+                optionValue="_id"
+                placeholder="Selecciona un tema"
+                [filter]="true"
+                filterBy="name"
+                [style]="{ width: '100%' }"
+              ></p-dropdown>
+            </ng-template>
+            <ng-template pTemplate="output">
+              <a [routerLink]="['/admin']" [queryParams]="{ view: 'cards', groupId: card.groupId }">
+                <button pButton pRipple type="button">{{ getGroupName(card.groupId) }}</button>
+              </a>
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <!-- Columna Imagen -->
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="card.imageUrl" class="p-inputtext-sm"></ng-template>
+            <ng-template pTemplate="output">
+              <div class="image-cell">
+                <i *ngIf="card.imageUrl" class="pi pi-image image-icon"
+                  (mouseenter)="showImagePreview($event, card.imageUrl)"
+                  (mouseleave)="imagePreviewPanel.hide()"></i>
+                <span class="image-url-text">{{ card.imageUrl }}</span>
+              </div>
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <!-- Columna Visible -->
+        <td class="text-center">
+          <p-tag [value]="card.enabled ? 'Sí' : 'No'" [severity]="card.enabled ? 'success' : 'danger'"></p-tag>
+        </td>
+        <!-- Columna Acciones -->
+        <td class="text-center">
+          <div class="action-buttons">
+            <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text action-edit"
+                    pInitEditableRow
+                    (click)="onRowEditInit(card)"></button>
+
+            <button *ngIf="editing" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded p-button-text action-save"
+                    (click)="manualSave(card, ri)"></button>
+
+            <button *ngIf="editing" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-text action-cancel"
+                    (click)="manualCancel(card, ri)"></button>
+
+            <button pButton pRipple type="button"
+                    [icon]="card.enabled ? 'pi pi-eye' : 'pi pi-eye-slash'"
+                    (click)="toggleCardStatus(card)"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Mensajes de tabla vacía -->
+    <ng-template pTemplate="emptymessage">
+      <tr *ngIf="filteredCards.length === 0 && searchTerm">
+        <td colspan="6" class="text-center p-5">No se encontraron tarjetas que coincidan con "{{ searchTerm }}".</td>
+      </tr>
+      <tr *ngIf="filteredCards.length === 0 && !searchTerm">
+        <td colspan="6" class="text-center p-5">No hay tarjetas creadas.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>
+
+<!-- Paginador personalizado -->
+<app-custom-paginator *ngIf="totalPages > 1" [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></app-custom-paginator>

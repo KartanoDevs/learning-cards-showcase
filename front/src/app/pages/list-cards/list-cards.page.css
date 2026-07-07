@@ -1,0 +1,160 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.list-cards-wrapper {
+  display: grid;
+  gap: 1rem;
+}
+
+.loading-box {
+  display: grid;
+  place-items: center;
+  min-height: 8rem;
+}
+
+.cards-grid {
+  margin-top: .5rem;
+}
+
+.empty {
+  opacity: .7;
+  text-align: center;
+}
+
+.paginator-box {
+  display: flex;
+  justify-content: center;
+  margin: .5rem 0 1.5rem;
+}
+
+.cards-wrap {
+  min-height: 40vh;             /* 👉 ocupa todo el alto de la ventana */
+  max-width: 95vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* distribuye arriba/abajo */
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.group-title {
+  text-align: center;
+  color: var(--brand-500);
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.state {
+  display: grid;
+  place-items: center;
+  padding: 2rem 0;
+  color: #64748b;
+}
+
+.state.empty {
+  color: #64748b;
+}
+
+/* ===== Navegación con flechas ===== */
+.navbar {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: box-shadow .15s ease, transform .06s ease, background .15s ease, color .15s ease;
+}
+
+.nav-btn:hover:not([disabled]) {
+  background: var(--brand-400);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(2,8,23,.06);
+}
+
+.nav-btn:active:not([disabled]) {
+  transform: translateY(1px);
+}
+
+.nav-btn[disabled] {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.nav-info {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.page-chip {
+  background: var(--brand-400);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: .9rem;
+  font-weight: 700;
+}
+
+.sep {
+  color: #94a3b8;
+}
+
+.count {
+  color: #334155;
+}
+
+/* Botones extra */
+.controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+
+.btn:hover {
+  background: var(--brand-400);
+  color: #fff;
+}
+
+/* Dialog imagen */
+.image-modal {
+  display: grid;
+  place-items: center;
+  background: #000;
+}
+
+.image-modal .image {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  display: block;
+}
+
+.no-image {
+  color: #fff;
+  padding: 2rem;
+}

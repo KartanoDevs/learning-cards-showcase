@@ -1,0 +1,27 @@
+<div class="navbar">
+  <button
+    type="button"
+    class="nav-btn"
+    (click)="goPrev()"
+    [disabled]="totalPages <= 1"
+    aria-label="Anterior"
+    title="Anterior"
+  >
+    <i class="pi pi-angle-left"></i>
+  </button>
+
+  <div class="nav-info">
+    <span class="page-chip">{{ label }} {{ currentPage }} de {{ totalPages }}</span>
+  </div>
+
+  <button
+    type="button"
+    class="nav-btn"
+    (click)="goNext()"
+    [disabled]="totalPages <= 1"
+    aria-label="Siguiente"
+    title="Siguiente"
+  >
+    <i class="pi pi-angle-right"></i>
+  </button>
+</div>

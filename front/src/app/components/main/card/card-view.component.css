@@ -1,0 +1,96 @@
+/* 1. Contenedor a pantalla completa */
+.card-view-fullscreen {
+  /* Ocupa el espacio restante de la ventana menos la altura del header (80px asumidos) */
+  height: calc(100vh - 80px);
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: #f4f4f4;
+}
+
+/* 2. Estilos para el contenedor de la tarjeta */
+.card-wrapper {
+  perspective: 1000px; /* Habilita el espacio 3D */
+  width: 90%;
+  max-width: 800px; /* Limita el ancho para que no sea excesivamente grande */
+  height: 90%;
+  max-height: 500px; /* Limita la altura de la tarjeta */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flashcard-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.8s;
+  transform-style: preserve-3d; /* Permite que los hijos se posicionen en 3D */
+  cursor: pointer;
+}
+
+/* 3. Volteo de tarjeta */
+.flashcard-container.flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Oculta la cara trasera cuando está al frente */
+
+  /* Flexbox para centrar el contenido */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.flashcard-front {
+  background-color: white;
+}
+
+.flashcard-back {
+  background-color: var(--primary-color, #42A5F5);
+  color: white;
+  transform: rotateY(180deg); /* Mueve la cara trasera a su posición inicial */
+}
+
+/* 4. Contenido grande y centrado dentro de la tarjeta */
+.card-content-large {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Asegurar que el título de la tarjeta trasera sea blanco */
+.flashcard-back :host ::ng-deep .p-card-header {
+    color: white !important;
+}
+
+/* 5. Controles de navegación y acciones */
+.card-controls {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.bottom-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}

@@ -1,0 +1,80 @@
+<!-- Contenedor principal que ocupa toda la ventana disponible -->
+<div class="card-view-fullscreen">
+
+  <!-- Controles de Navegación y Contador -->
+  <div class="card-controls top-controls">
+    <p-button
+      icon="pi pi-angle-left"
+      (onClick)="prevCard()"
+      styleClass="p-button-rounded p-button-text p-button-lg"
+      pRipple
+    />
+    <div class="text-xl font-medium counter-text">
+      Tarjeta **{{ currentIndex() + 1 }}** de **{{ cards().length }}**
+      <span *ngIf="currentCard()"> (Categoría: {{ currentCard()?.category }})</span>
+    </div>
+    <p-button
+      icon="pi pi-angle-right"
+      (onClick)="nextCard()"
+      styleClass="p-button-rounded p-button-text p-button-lg"
+      pRipple
+    />
+  </div>
+
+  <!-- Contenedor de la Tarjeta (Centro de la pantalla) -->
+  <div class="card-wrapper">
+    @if (currentCard()) {
+      <!-- El contenedor de la tarjeta aplica la clase 'flipped' para rotar -->
+      <div class="flashcard-container" [class.flipped]="isFlipped()">
+
+        <!-- Cara Frontal (Término) -->
+        <p-card
+          class="flashcard-face flashcard-front"
+          (click)="flipCard()"
+          header="Término"
+          [subheader]="currentCard()?.category"
+        >
+          <div class="card-content-large">
+            {{ currentCard()?.term }}
+          </div>
+        </p-card>
+
+        <!-- Cara Trasera (Definición) -->
+        <p-card
+          class="flashcard-face flashcard-back"
+          (click)="flipCard()"
+          header="Definición"
+          [subheader]="currentCard()?.term"
+        >
+          <div class="card-content-large">
+            {{ currentCard()?.definition }}
+          </div>
+        </p-card>
+
+      </div>
+    } @else {
+      <p-card header="Sin Tarjetas">
+        Este grupo no contiene tarjetas o el grupo está cargando.
+      </p-card>
+    }
+  </div>
+
+  <!-- Botones Inferiores (Shuffle y Voltear) -->
+  <div class="bottom-actions">
+    <p-button
+      label="Aleatorio (Shuffle)"
+      icon="pi pi-shuffle"
+      (onClick)="shuffleCard()"
+      pRipple
+      class="p-button-danger"
+      [disabled]="cards().length <= 1"
+    />
+    <p-button
+      label="Voltear (Espacio)"
+      icon="pi pi-refresh"
+      (onClick)="flipCard()"
+      pRipple
+      class="p-button-primary"
+    />
+  </div>
+</div>

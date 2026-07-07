@@ -1,0 +1,51 @@
+/* Estilos extraídos y adaptados para ser reutilizables */
+.navbar {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--ngx-border-color, #e2e8f0); /* Fallback color */
+  background: var(--ngx-bg, #fff);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: var(--ngx-text, #2a2a2a);
+}
+
+.nav-btn:hover:not([disabled]) {
+  background: var(--ngx-paginator-hover-bg, #eef2f7);
+  color: var(--ngx-primary-color, #3366ff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.nav-btn:active:not([disabled]) {
+  transform: translateY(1px);
+}
+
+.nav-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nav-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-chip {
+  background: var(--ngx-primary-color, #3366ff);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}

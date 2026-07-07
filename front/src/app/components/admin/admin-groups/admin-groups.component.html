@@ -1,0 +1,110 @@
+<p-toast></p-toast>
+
+<div class="ngx-style-card">
+
+  <div class="toolbar-container">
+
+    <div class="searchbar">
+      <div class="p-inputgroup searchbar__group">
+        <span class="p-inputgroup-addon searchbar__icon" aria-hidden="true"><i class="pi pi-search"></i></span>
+        <input id="group-search" type="text" pInputText class="search-input" placeholder="Buscar por nombre o descripción…"
+          [(ngModel)]="searchTerm" (input)="filterGroups()" autocomplete="off" />
+        <button pButton type="button" class="p-button-text p-button-rounded p-inputgroup-addon searchbar__clear"
+          *ngIf="searchTerm" (click)="searchTerm=''; filterGroups()" aria-label="Limpiar búsqueda" title="Limpiar"><i
+            class="pi pi-times"></i></button>
+      </div>
+    </div>
+
+    <!-- Botón de Añadir con el nuevo estilo -->
+    <div class="add-item-container">
+      <div class="group-item add-item" role="button" tabindex="0" (click)="!isAddingNewRow && addNewGroupRow()"
+        [class.disabled]="isAddingNewRow">
+        <i class="pi pi-plus folder-icon"></i>
+        <span class="group-name">Añadir Tema</span>
+      </div>
+    </div>
+  </div>
+
+  <p-table #pTable [value]="paginatedGroups" dataKey="_id" editMode="row" styleClass="p-datatable-ngx"
+    [tableStyle]="{'min-width': '50rem'}" sortMode="multiple">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:30%" pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+        <th style="width:45%" pSortableColumn="description">Descripción <p-sortIcon field="description"></p-sortIcon>
+        </th>
+        <th style="width:10rem" class="text-center">Nº Tarjetas</th>
+        <th class="text-center">Visible</th>
+        <th style="width:10rem" class="text-center">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-group let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="group">
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input"><textarea pTextarea [(ngModel)]="group.name" rows="1"
+                class="w-full p-inputtext-sm auto-resize-textarea" (input)="autoResize($event)"></textarea></ng-template>
+            <ng-template pTemplate="output">
+              <a [routerLink]="['/list-cards', group._id]">
+                <button pButton pRipple type="button">{{ group.name }}</button>
+              </a>
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input"><textarea pTextarea [(ngModel)]="group.description" rows="1"
+                class="w-full p-inputtext-sm auto-resize-textarea" (input)="autoResize($event)"></textarea></ng-template>
+            <ng-template pTemplate="output">{{ group.description }}</ng-template>
+          </p-cellEditor>
+        </td>
+        <td class="text-center">{{ cardCounts.get(group._id) || 0 }}</td>
+        <td class="text-center">
+          <p-tag [value]="group.enabled ? 'Sí' : 'No'" [severity]="group.enabled ? 'success' : 'danger'"></p-tag>
+        </td>
+        <td class="text-center">
+          <div class="action-buttons">
+            <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-pencil"
+              class="p-button-rounded p-button-text action-edit" pInitEditableRow
+              (click)="onRowEditInit(group)"></button>
+
+            <button *ngIf="editing" pButton pRipple type="button" icon="pi pi-check"
+              class="p-button-rounded p-button-text action-save" (click)="manualSave(group, ri)"></button>
+
+            <button *ngIf="editing" pButton pRipple type="button" icon="pi pi-times"
+              class="p-button-rounded p-button-text action-cancel" (click)="manualCancel(group, ri)"></button>
+
+            <button pButton pRipple type="button" [icon]="group.enabled ? 'pi pi-eye' : 'pi pi-eye-slash'"
+              (click)="toggleGroupStatus(group)"></button>
+
+            <!-- Botón Fav -->
+            <button pButton pRipple type="button" [icon]="group.fav ? 'pi pi-star-fill' : 'pi pi-star'"
+              class="p-button-rounded p-button-text p-button-warning" (click)="toggleGroupFav(group)"></button>
+
+            <!-- Botón para ver/editar tarjetas del grupo -->
+            <button pButton pRipple type="button" icon="pi pi-table" class="p-button-rounded p-button-text"
+              [routerLink]="['/admin']" [queryParams]="{ view: 'cards', groupId: group._id }"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr *ngIf="filteredGroups.length === 0 && searchTerm">
+        <td colspan="5" class="text-center p-5">
+          No se encontraron temas que coincidan con "{{ searchTerm }}".
+        </td>
+      </tr>
+      <tr *ngIf="filteredGroups.length === 0 && !searchTerm">
+        <td colspan="5" class="text-center p-5">No se encontraron temas.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+
+</div>
+
+<div>
+  <app-custom-paginator *ngIf="totalPages > 1" [currentPage]="currentPage" [totalPages]="totalPages"
+    (pageChange)="onPageChange($event)" [label]="'Página'"></app-custom-paginator>
+</div>

@@ -1,0 +1,17 @@
+services:
+  backend:
+    build: ./back
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - MONGO_URI=${MONGO_URI} # Lee la URL del archivo .env
+    restart: always
+
+  frontend:
+    build: ./front
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always

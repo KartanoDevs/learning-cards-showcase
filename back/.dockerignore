@@ -1,0 +1,14 @@
+# Ignorar archivos innecesarios en la imagen Docker del backend
+node_modules
+npm-debug.log
+.env
+.env.*
+dist
+*.md
+.git
+.gitignore
+.vscode
+.idea
+*.log
+coverage
+.nyc_output
