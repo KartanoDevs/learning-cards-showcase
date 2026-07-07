@@ -336,16 +336,6 @@ GET    /health            # Verificar estado del servidor
 
 ---
 
-## 👥 Contribuir
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add: AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
----
-
 ## 📝 Principios de Desarrollo
 
 Este proyecto sigue:
@@ -356,28 +346,6 @@ Este proyecto sigue:
 - ✅ **Inyección de Dependencias**: Usando el DI de Angular
 - ✅ **Programación Reactiva**: RxJS y Observables
 - ✅ **Tipado Fuerte**: TypeScript en frontend y backend
-
----
-
-## 📄 Licencia
-
-Este proyecto es de código abierto para fines educativos.
-
----
-
-## 🆘 Soporte
-
-Si encuentras problemas o tienes preguntas:
-
-1. Revisa el [README_DESPLIEGUE.md](README_DESPLIEGUE.md)
-2. Consulta la sección de [Solución de Problemas](#-solución-de-problemas)
-3. Revisa los logs de Docker: `docker logs learning-cards-api`
-
----
-
-## ✨ Agradecimientos
-
-Desarrollado con ❤️ usando tecnologías modernas y mejores prácticas de la industria.
 
 ---
 
